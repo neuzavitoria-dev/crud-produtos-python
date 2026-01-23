@@ -24,7 +24,13 @@ while True:
         case "1":
             nome = input("Digite o nome do produto: ")
             preco = float(input("Digite o preço do produto: "))
+
+            if lista_de_produtos:
+                 novo_id = lista_de_produtos[-1]["id"] + 1
+            else:
+                novo_id = 1
             novo_produto = {
+                "id": novo_id,
                 "Nome": nome,
                 "Preço": preco
             }
@@ -36,7 +42,7 @@ while True:
             for element in lista_de_produtos:
                 print(f"""
                 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                {element['Nome']}, {element['Preço']:.2f}
+                {element['id']}, {element['Nome']}, {element['Preço']:.2f}
                 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 """)
 
@@ -44,13 +50,14 @@ while True:
             print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
             print("LISTA DE PRODUTOS")
             for element in lista_de_produtos:
-                print(f"Nome: {element['Nome']} - {element['Preço']:.2f}")
+                print(f"ID: {element['id']} - Nome: {element['Nome']} - {element['Preço']:.2f}")
             print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")    
 
-            escolha = input("Digite o Nome do produto que deseja editar")
+            escolha = int(input("Digite o ID do produto que deseja editar: "))
+
             produto_encontrado = 0
             for element in lista_de_produtos:
-                if element['Nome'].lower() == escolha.lower():
+                if element['id'] == escolha:
                     produto_encontrado += 1
                     while True:
                         menu_editar = input("""
@@ -75,6 +82,7 @@ while True:
                                 break
                             case _:
                                 print("Opição invalida.")
+                    break
             if produto_encontrado == 0:
                 print("Produto não encontrado.")
         
@@ -82,16 +90,19 @@ while True:
             print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
             print("LISTA DE PRODUTOS")
             for element in lista_de_produtos:
-                print(f"Nome: {element['Nome']} - {element['Preço']:.2f}")
+                print(f"ID: {element['id']} - Nome: {element['Nome']} - {element['Preço']:.2f}")
             print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")   
-            escolha = input("Digite o Nome do produto que deseja excluir: ")
+
+            escolha = int(input("Digite o ID do produto que deseja excluir: "))
+
             produto_encontrado = 0
             for element in lista_de_produtos:
-                if element['Nome'].lower() == escolha.lower():
+                if element['id'] == escolha:
                     lista_de_produtos.remove(element)
                     salvaProdutos(lista_de_produtos)
                     produto_encontrado += 1
                     print("Produto excluido com sucesso!")
+                    break
             if produto_encontrado == 0:
                 print("Produto não encontrado.")
 
